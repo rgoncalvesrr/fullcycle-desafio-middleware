@@ -22,14 +22,21 @@ docker-compose up -d
 
 ## 3. Teste os cenários
 ## Limitação por IP
-for i in {1..4}; do curl -is -w "Request $i: %{http_code}\n" -o /dev/null "http://localhost:8080/api/v1/zipcode/01001001"; done
+for i in {1..4}; do curl -is -w "Request $i: %{http_code}\n" -o /dev/null "http://localhost:8080/01001001"; done
 echo "wait for block duration: 5s" && sleep 5
-curl -is -w "status: %{http_code}\n" -o /dev/null http://localhost:8080/api/v1/zipcode/01001001
+curl -is -w "status: %{http_code}\n" -o /dev/null http://localhost:8080/01001001
 
 ## Limitação por token
-for i in {1..6}; do curl -is -w "Request $i: %{http_code}\n" -o /dev/null -H "API_KEY: my-token" http://localhost:8080/api/v1/zipcode/01001001; done
+for i in {1..6}; do curl -is -w "Request $i: %{http_code}\n" -o /dev/null -H "API_KEY: 3851b1ae73ca0ca6e3c24a0256a80ace" http://localhost:8080/01001001; done
 echo "wait for block duration: 5s" && sleep 5
-curl -is -w "status: %{http_code}\n" -o /dev/null -H "API_KEY: my-token" "http://localhost:8080/api/v1/zipcode/01001001"
+curl -is -w "status: %{http_code}\n" -o /dev/null -H "API_KEY: 3851b1ae73ca0ca6e3c24a0256a80ace" "http://localhost:8080/01001001"
+
+## Observação
+## O passo 3 pode ser executa com um script bash já disponível no projeto
+##
+## 3.Teste os cenários
+./deny.sh
+
 ```
 
 
