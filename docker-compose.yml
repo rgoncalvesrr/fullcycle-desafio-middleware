@@ -1,0 +1,22 @@
+services:
+  redis:
+    image: redis
+    command: redis-server --requirepass ${CACHE_DB_PASSWORD}
+    ports:
+      - "6379:6379"
+    networks:
+      - posgolang
+  web:
+    build: .
+    environment:
+      - WEATHER_API_KEY=${WEATHER_API_KEY}
+      - CACHE_DB_PASSWORD=${CACHE_DB_PASSWORD}
+      - CACHE_DB_URL=redis:6379
+    env_file:
+      - app.env
+    ports:
+      - "8080:8080"
+    networks:
+      - posgolang
+networks:
+  posgolang:
