@@ -14,10 +14,13 @@ API_KEY: <TOKEN>
 
 ## Como rodar o projeto: manual
 ``` shell
-## 1. Suba os containers
+## 1. Exporte as varíaveis de ambiente necessárias
+export CACHE_DB_PASSWORD=Redis2019!
+
+## 2. Suba os containers
 docker-compose up -d
 
-## 2. Teste os cenários
+## 3. Teste os cenários
 ## Limitação por IP
 for i in {1..4}; do curl -is -w "Request $i: %{http_code}\n" -o /dev/null "http://localhost:8080/api/v1/zipcode/01001001"; done
 echo "wait for block duration: 5s" && sleep 5
